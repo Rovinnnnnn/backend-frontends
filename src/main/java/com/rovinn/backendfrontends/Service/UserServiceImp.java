@@ -1,16 +1,20 @@
 package com.rovinn.backendfrontends.Service;
 
+import com.rovinn.backendfrontends.JwtUtil;
 import com.rovinn.backendfrontends.Repository.UserRepository;
 import com.rovinn.backendfrontends.model.User;
 import com.rovinn.backendfrontends.model.UserLoginDTO;
 import com.rovinn.backendfrontends.model.UserRegisterDTO;
 import com.rovinn.backendfrontends.model.UserResponseDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImp implements UserServiceInterface{
     final private UserRepository userRepository;
+    @Autowired
+    private JwtUtil jwtUtil;
     public UserServiceImp(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -21,9 +25,12 @@ public class UserServiceImp implements UserServiceInterface{
         if(!passwordEncode.matches(login.getPassword(), saved.getPassword())) {
             throw new RuntimeException("Incorrect password");
         }
+        String token = jwtUtil.generateToken(saved.getEmail());
+
         UserResponseDTO userResponseDTO = new UserResponseDTO();
         userResponseDTO.setId(saved.getId());
         userResponseDTO.setUsername(saved.getUsername());
+        userResponseDTO.setToken(token);
         return userResponseDTO;
     }
     @Override
