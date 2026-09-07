@@ -24,6 +24,8 @@ public class ProductServiceImp implements ProductServiceInterface{
             productDTO.setId(product.getId());
             productDTO.setName(product.getName());
             productDTO.setPrice(product.getPrice());
+            productDTO.setCategory(product.getCategory());
+            productDTO.setDescription(product.getDescription());
             productDTOS.add(productDTO);
         }
         return productDTOS;
