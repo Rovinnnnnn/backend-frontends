@@ -21,7 +21,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.showAllProducts());
     }
     @GetMapping("/search")
-    public ResponseEntity<ProductDTO> showProductByName(@RequestParam String name) {
+    public ResponseEntity<List<ProductDTO>> showProductByName(@RequestParam String name) {
         return ResponseEntity.ok(productService.showProductByName(name));
     }
     @PutMapping("/{id}")

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ProductServiceInterface {
     List<ProductDTO> showAllProducts();
-    ProductDTO showProductByName(String name);
+    List<ProductDTO> showProductByName(String name);
     ProductDTO updateProduct(Long id, ProductRegisterDTO upDateProduct);
     ProductDTO addProduct(ProductRegisterDTO newProduct);
     void deleteProduct(Long id);

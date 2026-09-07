@@ -31,16 +31,19 @@ public class ProductServiceImp implements ProductServiceInterface{
         return productDTOS;
     }
     @Override
-    public ProductDTO showProductByName(String name){
-        Product product = productRepository.findByName(name).orElseThrow(()-> new RuntimeException("product is not found"));
-
-        ProductDTO productDTO = new ProductDTO();
-        productDTO.setId(product.getId());
-        productDTO.setName(product.getName());
-        productDTO.setPrice(product.getPrice());
-        productDTO.setCategory(product.getCategory());
-        productDTO.setDescription(product.getDescription());
-        return productDTO;
+    public List<ProductDTO> showProductByName(String name){
+        List<Product> product = productRepository.findByNameContainingIgnoreCase(name).orElseThrow(()-> new RuntimeException("product is not found"));
+        List<ProductDTO> result = new ArrayList<>();
+        for (Product products : product) {
+            ProductDTO productDTO = new ProductDTO();
+            productDTO.setId(products.getId());
+            productDTO.setName(products.getName());
+            productDTO.setPrice(products.getPrice());
+            productDTO.setCategory(products.getCategory());
+            productDTO.setDescription(products.getDescription());
+            result.add(productDTO);
+        }
+        return result;
     }
     @Override
     public ProductDTO updateProduct(Long id, ProductRegisterDTO upDateProduct) {
